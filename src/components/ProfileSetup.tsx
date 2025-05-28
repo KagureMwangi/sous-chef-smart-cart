@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,8 +16,9 @@ interface ProfileSetupProps {
 
 type Profile = Tables<'profiles'>;
 type UserAllergy = Tables<'user_allergies'>;
+type AllergyType = Tables<'user_allergies'>['allergy'];
 
-const allergies = [
+const allergies: AllergyType[] = [
   'nuts', 'dairy', 'gluten', 'eggs', 'seafood', 'soy', 'shellfish', 'sesame', 'other'
 ] as const;
 
@@ -115,14 +115,14 @@ const ProfileSetup = ({ user }: ProfileSetupProps) => {
     }
   };
 
-  const handleAllergyChange = async (allergy: string, checked: boolean) => {
+  const handleAllergyChange = async (allergy: AllergyType, checked: boolean) => {
     try {
       if (checked) {
         const { error } = await supabase
           .from('user_allergies')
           .insert({
             user_id: user.id,
-            allergy: allergy as any,
+            allergy: allergy,
           });
         
         if (error) throw error;
