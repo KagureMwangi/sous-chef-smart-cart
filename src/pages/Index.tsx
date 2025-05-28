@@ -3,6 +3,7 @@ import React from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import Auth from '@/components/Auth';
 import Dashboard from '@/components/Dashboard';
+import LandingPage from '@/components/LandingPage';
 
 const Index = () => {
   const { user, loading } = useAuth();
@@ -18,11 +19,12 @@ const Index = () => {
     );
   }
 
-  if (!user) {
-    return <Auth />;
+  if (user) {
+    return <Dashboard user={user} />;
   }
 
-  return <Dashboard user={user} />;
+  // Show landing page for non-authenticated users
+  return <LandingPage />;
 };
 
 export default Index;
