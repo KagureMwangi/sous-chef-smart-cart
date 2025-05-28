@@ -9,7 +9,334 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      ingredient_prices: {
+        Row: {
+          country: string
+          currency: string
+          id: string
+          ingredient_id: string
+          last_updated: string
+          price_per_unit: number
+          unit: Database["public"]["Enums"]["unit_type"]
+        }
+        Insert: {
+          country: string
+          currency: string
+          id?: string
+          ingredient_id: string
+          last_updated?: string
+          price_per_unit: number
+          unit: Database["public"]["Enums"]["unit_type"]
+        }
+        Update: {
+          country?: string
+          currency?: string
+          id?: string
+          ingredient_id?: string
+          last_updated?: string
+          price_per_unit?: number
+          unit?: Database["public"]["Enums"]["unit_type"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ingredient_prices_ingredient_id_fkey"
+            columns: ["ingredient_id"]
+            isOneToOne: false
+            referencedRelation: "ingredients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ingredients: {
+        Row: {
+          category: string | null
+          contains_allergens:
+            | Database["public"]["Enums"]["allergy_type"][]
+            | null
+          created_at: string
+          default_unit: Database["public"]["Enums"]["unit_type"]
+          id: string
+          name: string
+        }
+        Insert: {
+          category?: string | null
+          contains_allergens?:
+            | Database["public"]["Enums"]["allergy_type"][]
+            | null
+          created_at?: string
+          default_unit?: Database["public"]["Enums"]["unit_type"]
+          id?: string
+          name: string
+        }
+        Update: {
+          category?: string | null
+          contains_allergens?:
+            | Database["public"]["Enums"]["allergy_type"][]
+            | null
+          created_at?: string
+          default_unit?: Database["public"]["Enums"]["unit_type"]
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      pantry_items: {
+        Row: {
+          created_at: string
+          estimated_days_lasting: number | null
+          expiry_date: string | null
+          id: string
+          ingredient_id: string
+          purchase_date: string | null
+          quantity: number
+          unit: Database["public"]["Enums"]["unit_type"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          estimated_days_lasting?: number | null
+          expiry_date?: string | null
+          id?: string
+          ingredient_id: string
+          purchase_date?: string | null
+          quantity: number
+          unit: Database["public"]["Enums"]["unit_type"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          estimated_days_lasting?: number | null
+          expiry_date?: string | null
+          id?: string
+          ingredient_id?: string
+          purchase_date?: string | null
+          quantity?: number
+          unit?: Database["public"]["Enums"]["unit_type"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pantry_items_ingredient_id_fkey"
+            columns: ["ingredient_id"]
+            isOneToOne: false
+            referencedRelation: "ingredients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          country: string
+          created_at: string
+          currency: string
+          household_size: number
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          country?: string
+          created_at?: string
+          currency?: string
+          household_size?: number
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          country?: string
+          created_at?: string
+          currency?: string
+          household_size?: number
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      recipe_ingredients: {
+        Row: {
+          id: string
+          ingredient_id: string
+          notes: string | null
+          quantity: number
+          recipe_id: string
+          unit: Database["public"]["Enums"]["unit_type"]
+        }
+        Insert: {
+          id?: string
+          ingredient_id: string
+          notes?: string | null
+          quantity: number
+          recipe_id: string
+          unit: Database["public"]["Enums"]["unit_type"]
+        }
+        Update: {
+          id?: string
+          ingredient_id?: string
+          notes?: string | null
+          quantity?: number
+          recipe_id?: string
+          unit?: Database["public"]["Enums"]["unit_type"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recipe_ingredients_ingredient_id_fkey"
+            columns: ["ingredient_id"]
+            isOneToOne: false
+            referencedRelation: "ingredients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "recipe_ingredients_recipe_id_fkey"
+            columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      recipes: {
+        Row: {
+          cook_time: number | null
+          created_at: string
+          description: string | null
+          id: string
+          instructions: string | null
+          is_public: boolean | null
+          name: string
+          prep_time: number | null
+          servings: number
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          cook_time?: number | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          instructions?: string | null
+          is_public?: boolean | null
+          name: string
+          prep_time?: number | null
+          servings?: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          cook_time?: number | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          instructions?: string | null
+          is_public?: boolean | null
+          name?: string
+          prep_time?: number | null
+          servings?: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      shopping_items: {
+        Row: {
+          created_at: string
+          id: string
+          ingredient_id: string
+          price_per_unit: number | null
+          quantity: number
+          total_price: number | null
+          trip_id: string
+          unit: Database["public"]["Enums"]["unit_type"]
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ingredient_id: string
+          price_per_unit?: number | null
+          quantity: number
+          total_price?: number | null
+          trip_id: string
+          unit: Database["public"]["Enums"]["unit_type"]
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ingredient_id?: string
+          price_per_unit?: number | null
+          quantity?: number
+          total_price?: number | null
+          trip_id?: string
+          unit?: Database["public"]["Enums"]["unit_type"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shopping_items_ingredient_id_fkey"
+            columns: ["ingredient_id"]
+            isOneToOne: false
+            referencedRelation: "ingredients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shopping_items_trip_id_fkey"
+            columns: ["trip_id"]
+            isOneToOne: false
+            referencedRelation: "shopping_trips"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      shopping_trips: {
+        Row: {
+          created_at: string
+          id: string
+          store_name: string | null
+          total_cost: number | null
+          trip_date: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          store_name?: string | null
+          total_cost?: number | null
+          trip_date?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          store_name?: string | null
+          total_cost?: number | null
+          trip_date?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_allergies: {
+        Row: {
+          allergy: Database["public"]["Enums"]["allergy_type"]
+          created_at: string
+          id: string
+          severity: string | null
+          user_id: string
+        }
+        Insert: {
+          allergy: Database["public"]["Enums"]["allergy_type"]
+          created_at?: string
+          id?: string
+          severity?: string | null
+          user_id: string
+        }
+        Update: {
+          allergy?: Database["public"]["Enums"]["allergy_type"]
+          created_at?: string
+          id?: string
+          severity?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +345,27 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      allergy_type:
+        | "nuts"
+        | "dairy"
+        | "gluten"
+        | "eggs"
+        | "seafood"
+        | "soy"
+        | "shellfish"
+        | "sesame"
+        | "other"
+      unit_type:
+        | "grams"
+        | "kg"
+        | "ml"
+        | "liters"
+        | "cups"
+        | "tbsp"
+        | "tsp"
+        | "pieces"
+        | "cans"
+        | "bottles"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -133,6 +480,30 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      allergy_type: [
+        "nuts",
+        "dairy",
+        "gluten",
+        "eggs",
+        "seafood",
+        "soy",
+        "shellfish",
+        "sesame",
+        "other",
+      ],
+      unit_type: [
+        "grams",
+        "kg",
+        "ml",
+        "liters",
+        "cups",
+        "tbsp",
+        "tsp",
+        "pieces",
+        "cans",
+        "bottles",
+      ],
+    },
   },
 } as const
