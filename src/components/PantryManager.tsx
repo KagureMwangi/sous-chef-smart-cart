@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,7 +8,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { User } from '@supabase/supabase-js';
 import { Tables } from '@/integrations/supabase/types';
-import { Plus, Trash2, Package } from 'lucide-react';
+import { Plus, Trash2, Package, Search } from 'lucide-react';
 
 interface PantryManagerProps {
   user: User;
@@ -28,6 +27,7 @@ const PantryManager = ({ user }: PantryManagerProps) => {
   const [unit, setUnit] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
   const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const { toast } = useToast();
 
   const units = ['grams', 'kg', 'ml', 'liters', 'cups', 'tbsp', 'tsp', 'pieces', 'cans', 'bottles'];
@@ -77,6 +77,10 @@ const PantryManager = ({ user }: PantryManagerProps) => {
     }
   };
 
+  const filteredIngredients = ingredients.filter(ingredient =>
+    ingredient.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const handleAddItem = async () => {
     if (!selectedIngredient || !quantity || !unit) {
       toast({
@@ -107,6 +111,7 @@ const PantryManager = ({ user }: PantryManagerProps) => {
       setQuantity('');
       setUnit('');
       setExpiryDate('');
+      setSearchTerm('');
 
       await fetchPantryItems();
 
@@ -161,13 +166,21 @@ const PantryManager = ({ user }: PantryManagerProps) => {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="ingredient">Ingredient</Label>
+              <Label htmlFor="ingredient-search">Search Ingredient</Label>
+              <Input
+                id="ingredient-search"
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Search ingredients..."
+                className="mb-2"
+              />
               <Select value={selectedIngredient} onValueChange={setSelectedIngredient}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select ingredient" />
                 </SelectTrigger>
-                <SelectContent>
-                  {ingredients.map((ingredient) => (
+                <SelectContent className="max-h-[200px]">
+                  {filteredIngredients.map((ingredient) => (
                     <SelectItem key={ingredient.id} value={ingredient.id}>
                       {ingredient.name}
                     </SelectItem>
