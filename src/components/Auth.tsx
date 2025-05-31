@@ -83,19 +83,19 @@ const Auth = () => {
             <ChefHat className="h-10 w-10 text-neon-green drop-shadow-lg" />
             <CardTitle className="text-3xl font-bold gradient-text">Sous-Chef</CardTitle>
           </div>
-          <CardDescription className="text-muted-foreground">Your personal shopping assistant</CardDescription>
+          <CardDescription className="text-high-contrast">Your personal shopping assistant</CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="signin" className="w-full">
             <TabsList className="grid w-full grid-cols-2 glass-effect">
-              <TabsTrigger value="signin" className="hover:text-neon-blue transition-colors">Sign In</TabsTrigger>
-              <TabsTrigger value="signup" className="hover:text-neon-purple transition-colors">Sign Up</TabsTrigger>
+              <TabsTrigger value="signin" className="hover:text-neon-blue transition-colors text-high-contrast">Sign In</TabsTrigger>
+              <TabsTrigger value="signup" className="hover:text-neon-cyan transition-colors text-high-contrast">Sign Up</TabsTrigger>
             </TabsList>
             
             <TabsContent value="signin">
               <form onSubmit={handleSignIn} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="signin-email" className="text-foreground">Email</Label>
+                  <Label htmlFor="signin-email" className="text-high-contrast">Email</Label>
                   <Input
                     id="signin-email"
                     type="email"
@@ -107,7 +107,7 @@ const Auth = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signin-password" className="text-foreground">Password</Label>
+                  <Label htmlFor="signin-password" className="text-high-contrast">Password</Label>
                   <Input
                     id="signin-password"
                     type="password"
@@ -118,7 +118,7 @@ const Auth = () => {
                     required
                   />
                 </div>
-                <Button type="submit" className="w-full gradient-bg text-white hover:opacity-90 transition-all duration-300" disabled={loading}>
+                <Button type="submit" className="w-full gradient-bg text-green-contrast hover:opacity-90 transition-all duration-300" disabled={loading}>
                   {loading ? 'Signing In...' : 'Sign In'}
                 </Button>
               </form>
@@ -127,7 +127,7 @@ const Auth = () => {
             <TabsContent value="signup">
               <form onSubmit={handleSignUp} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="signup-email" className="text-foreground">Email</Label>
+                  <Label htmlFor="signup-email" className="text-high-contrast">Email</Label>
                   <Input
                     id="signup-email"
                     type="email"
@@ -139,7 +139,7 @@ const Auth = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signup-password" className="text-foreground">Password</Label>
+                  <Label htmlFor="signup-password" className="text-high-contrast">Password</Label>
                   <Input
                     id="signup-password"
                     type="password"
@@ -150,7 +150,7 @@ const Auth = () => {
                     required
                   />
                 </div>
-                <Button type="submit" className="w-full gradient-bg text-white hover:opacity-90 transition-all duration-300" disabled={loading}>
+                <Button type="submit" className="w-full gradient-bg text-green-contrast hover:opacity-90 transition-all duration-300" disabled={loading}>
                   {loading ? 'Creating Account...' : 'Create Account'}
                 </Button>
               </form>

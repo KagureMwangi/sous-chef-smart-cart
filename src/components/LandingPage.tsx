@@ -25,7 +25,7 @@ const LandingPage = () => {
             </div>
             <div className="flex items-center space-x-4">
               <ThemeToggle />
-              <Button onClick={() => setShowAuth(true)} className="gradient-bg text-white hover:opacity-90 transition-all duration-300">
+              <Button onClick={() => setShowAuth(true)} className="gradient-bg text-green-contrast hover:opacity-90 transition-all duration-300">
                 Get Started
               </Button>
             </div>
@@ -36,16 +36,16 @@ const LandingPage = () => {
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center">
-          <h1 className="text-5xl font-bold text-foreground mb-6">
+          <h1 className="text-5xl font-bold text-high-contrast mb-6">
             Your Personal <span className="gradient-text">Shopping Assistant</span>
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+          <p className="text-xl text-high-contrast mb-8 max-w-3xl mx-auto">
             Streamline your grocery shopping with intelligent recommendations, pantry management, 
             and recipe-based shopping lists tailored to your household needs.
           </p>
           <Button 
             size="lg" 
-            className="text-lg px-8 py-3 gradient-bg text-white hover:opacity-90 neon-glow transition-all duration-300"
+            className="text-lg px-8 py-3 gradient-bg text-green-contrast hover:opacity-90 neon-glow transition-all duration-300"
             onClick={() => setShowAuth(true)}
           >
             Start Shopping Smarter
@@ -59,7 +59,7 @@ const LandingPage = () => {
           <h2 className="text-3xl font-bold gradient-text mb-4">
             Everything You Need for Smart Shopping
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-lg text-high-contrast">
             Powerful features designed to save you time and money
           </p>
         </div>
@@ -71,7 +71,7 @@ const LandingPage = () => {
               <CardTitle className="gradient-text">Household Management</CardTitle>
             </CardHeader>
             <CardContent>
-              <CardDescription>
+              <CardDescription className="text-high-contrast">
                 Set up your household size, dietary restrictions, and preferences for personalized recommendations.
               </CardDescription>
             </CardContent>
@@ -83,7 +83,7 @@ const LandingPage = () => {
               <CardTitle className="gradient-text">Smart Pantry</CardTitle>
             </CardHeader>
             <CardContent>
-              <CardDescription>
+              <CardDescription className="text-high-contrast">
                 Track what you have at home and get suggestions on what to buy based on your inventory.
               </CardDescription>
             </CardContent>
@@ -95,7 +95,7 @@ const LandingPage = () => {
               <CardTitle className="gradient-text">Recipe Manager</CardTitle>
             </CardHeader>
             <CardContent>
-              <CardDescription>
+              <CardDescription className="text-high-contrast">
                 Add your favorite recipes and automatically generate shopping lists with cost estimates.
               </CardDescription>
             </CardContent>
@@ -107,7 +107,7 @@ const LandingPage = () => {
               <CardTitle className="gradient-text">Shopping Assistant</CardTitle>
             </CardHeader>
             <CardContent>
-              <CardDescription>
+              <CardDescription className="text-high-contrast">
                 Get personalized shopping recommendations and optimize your grocery trips.
               </CardDescription>
             </CardContent>
@@ -127,29 +127,29 @@ const LandingPage = () => {
                 <div className="flex items-start space-x-3">
                   <CheckCircle className="h-6 w-6 text-neon-green mt-1" />
                   <div>
-                    <h3 className="font-semibold text-foreground">Save Time & Money</h3>
-                    <p className="text-muted-foreground">Reduce food waste and avoid unnecessary purchases with smart inventory tracking.</p>
+                    <h3 className="font-semibold text-high-contrast">Save Time & Money</h3>
+                    <p className="text-high-contrast">Reduce food waste and avoid unnecessary purchases with smart inventory tracking.</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
                   <CheckCircle className="h-6 w-6 text-neon-green mt-1" />
                   <div>
-                    <h3 className="font-semibold text-foreground">Personalized Experience</h3>
-                    <p className="text-muted-foreground">Tailored recommendations based on your household size, dietary needs, and preferences.</p>
+                    <h3 className="font-semibold text-high-contrast">Personalized Experience</h3>
+                    <p className="text-high-contrast">Tailored recommendations based on your household size, dietary needs, and preferences.</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
                   <CheckCircle className="h-6 w-6 text-neon-green mt-1" />
                   <div>
-                    <h3 className="font-semibold text-foreground">Easy Organization</h3>
-                    <p className="text-muted-foreground">Keep your recipes, pantry, and shopping lists organized in one convenient place.</p>
+                    <h3 className="font-semibold text-high-contrast">Easy Organization</h3>
+                    <p className="text-high-contrast">Keep your recipes, pantry, and shopping lists organized in one convenient place.</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
                   <CheckCircle className="h-6 w-6 text-neon-green mt-1" />
                   <div>
-                    <h3 className="font-semibold text-foreground">Cost Estimates</h3>
-                    <p className="text-muted-foreground">Get estimated costs for your shopping lists to better manage your budget.</p>
+                    <h3 className="font-semibold text-high-contrast">Cost Estimates</h3>
+                    <p className="text-high-contrast">Get estimated costs for your shopping lists to better manage your budget.</p>
                   </div>
                 </div>
               </div>
@@ -158,13 +158,13 @@ const LandingPage = () => {
               <div className="text-center">
                 <Star className="h-16 w-16 text-neon-cyan mx-auto mb-4 drop-shadow-lg" />
                 <h3 className="text-2xl font-bold gradient-text mb-4">Ready to Get Started?</h3>
-                <p className="text-muted-foreground mb-6">
+                <p className="text-high-contrast mb-6">
                   Join thousands of users who are already shopping smarter with Sous-Chef.
                 </p>
                 <Button 
                   size="lg" 
                   onClick={() => setShowAuth(true)}
-                  className="w-full gradient-bg text-white hover:opacity-90 transition-all duration-300"
+                  className="w-full gradient-bg text-green-contrast hover:opacity-90 transition-all duration-300"
                 >
                   Create Your Account
                 </Button>
@@ -182,7 +182,7 @@ const LandingPage = () => {
               <ChefHat className="h-6 w-6 text-neon-green" />
               <span className="text-lg font-semibold gradient-text">Sous-Chef</span>
             </div>
-            <p className="text-muted-foreground">
+            <p className="text-high-contrast">
               Your personal shopping assistant for smarter grocery shopping.
             </p>
           </div>

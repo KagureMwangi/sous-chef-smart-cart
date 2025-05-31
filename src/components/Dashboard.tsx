@@ -45,9 +45,9 @@ const Dashboard = ({ user }: DashboardProps) => {
               <h1 className="text-2xl font-bold gradient-text">Sous-Chef</h1>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-muted-foreground">Welcome, {user.email}</span>
+              <span className="text-sm text-high-contrast">Welcome, {user.email}</span>
               <ThemeToggle />
-              <Button variant="outline" size="sm" onClick={handleSignOut} className="neon-border hover:neon-glow transition-all duration-300">
+              <Button variant="outline" size="sm" onClick={handleSignOut} className="neon-border hover:neon-glow transition-all duration-300 text-high-contrast">
                 <LogOut className="h-4 w-4 mr-2" />
                 Sign Out
               </Button>
@@ -59,19 +59,19 @@ const Dashboard = ({ user }: DashboardProps) => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-4 mb-8 glass-effect">
-            <TabsTrigger value="profile" className="flex items-center space-x-2 hover:text-neon-blue transition-colors">
+            <TabsTrigger value="profile" className="flex items-center space-x-2 hover:text-neon-blue transition-colors text-high-contrast">
               <UserIcon className="h-4 w-4" />
               <span>Profile</span>
             </TabsTrigger>
-            <TabsTrigger value="pantry" className="flex items-center space-x-2 hover:text-neon-green transition-colors">
+            <TabsTrigger value="pantry" className="flex items-center space-x-2 hover:text-neon-green transition-colors text-high-contrast">
               <Package className="h-4 w-4" />
               <span>Pantry</span>
             </TabsTrigger>
-            <TabsTrigger value="recipes" className="flex items-center space-x-2 hover:text-neon-cyan transition-colors">
+            <TabsTrigger value="recipes" className="flex items-center space-x-2 hover:text-neon-cyan transition-colors text-high-contrast">
               <ChefHat className="h-4 w-4" />
               <span>Recipes</span>
             </TabsTrigger>
-            <TabsTrigger value="shopping" className="flex items-center space-x-2 hover:text-neon-blue transition-colors">
+            <TabsTrigger value="shopping" className="flex items-center space-x-2 hover:text-neon-blue transition-colors text-high-contrast">
               <ShoppingCart className="h-4 w-4" />
               <span>Shopping</span>
             </TabsTrigger>
@@ -81,7 +81,7 @@ const Dashboard = ({ user }: DashboardProps) => {
             <Card className="glass-effect neon-border hover:neon-glow transition-all duration-300">
               <CardHeader>
                 <CardTitle className="gradient-text">Profile Setup</CardTitle>
-                <CardDescription>
+                <CardDescription className="text-high-contrast">
                   Configure your household information and dietary preferences
                 </CardDescription>
               </CardHeader>
@@ -95,7 +95,7 @@ const Dashboard = ({ user }: DashboardProps) => {
             <Card className="glass-effect neon-border hover:neon-glow transition-all duration-300">
               <CardHeader>
                 <CardTitle className="gradient-text">Pantry Management</CardTitle>
-                <CardDescription>
+                <CardDescription className="text-high-contrast">
                   Track what you have at home
                 </CardDescription>
               </CardHeader>
@@ -109,7 +109,7 @@ const Dashboard = ({ user }: DashboardProps) => {
             <Card className="glass-effect neon-border hover:neon-glow transition-all duration-300">
               <CardHeader>
                 <CardTitle className="gradient-text">Recipe Manager</CardTitle>
-                <CardDescription>
+                <CardDescription className="text-high-contrast">
                   Add recipes and get ingredient lists with cost estimates
                 </CardDescription>
               </CardHeader>
@@ -123,7 +123,7 @@ const Dashboard = ({ user }: DashboardProps) => {
             <Card className="glass-effect neon-border hover:neon-glow transition-all duration-300">
               <CardHeader>
                 <CardTitle className="gradient-text">Shopping Assistant</CardTitle>
-                <CardDescription>
+                <CardDescription className="text-high-contrast">
                   Get personalized shopping recommendations
                 </CardDescription>
               </CardHeader>
