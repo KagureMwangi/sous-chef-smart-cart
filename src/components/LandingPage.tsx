@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChefHat, ShoppingCart, Package, Users, Star, CheckCircle } from 'lucide-react';
+import { ThemeToggle } from './ThemeToggle';
 import Auth from './Auth';
 
 const LandingPage = () => {
@@ -13,18 +14,21 @@ const LandingPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
+    <div className="min-h-screen gradient-bg">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="glass-effect border-b backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
-              <ChefHat className="h-8 w-8 text-green-600" />
-              <h1 className="text-2xl font-bold text-green-700">Sous-Chef</h1>
+              <ChefHat className="h-8 w-8 text-neon-green drop-shadow-lg" />
+              <h1 className="text-2xl font-bold gradient-text">Sous-Chef</h1>
             </div>
-            <Button onClick={() => setShowAuth(true)}>
-              Get Started
-            </Button>
+            <div className="flex items-center space-x-4">
+              <ThemeToggle />
+              <Button onClick={() => setShowAuth(true)} className="gradient-bg text-white hover:opacity-90 transition-all duration-300">
+                Get Started
+              </Button>
+            </div>
           </div>
         </div>
       </header>
@@ -32,16 +36,16 @@ const LandingPage = () => {
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center">
-          <h1 className="text-5xl font-bold text-gray-900 mb-6">
-            Your Personal <span className="text-green-600">Shopping Assistant</span>
+          <h1 className="text-5xl font-bold text-foreground mb-6">
+            Your Personal <span className="gradient-text">Shopping Assistant</span>
           </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
             Streamline your grocery shopping with intelligent recommendations, pantry management, 
             and recipe-based shopping lists tailored to your household needs.
           </p>
           <Button 
             size="lg" 
-            className="text-lg px-8 py-3"
+            className="text-lg px-8 py-3 gradient-bg text-white hover:opacity-90 neon-glow transition-all duration-300"
             onClick={() => setShowAuth(true)}
           >
             Start Shopping Smarter
@@ -52,19 +56,19 @@ const LandingPage = () => {
       {/* Features Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl font-bold gradient-text mb-4">
             Everything You Need for Smart Shopping
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-muted-foreground">
             Powerful features designed to save you time and money
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <Card className="text-center">
+          <Card className="text-center glass-effect neon-border hover:neon-glow transition-all duration-300">
             <CardHeader>
-              <Users className="h-12 w-12 text-green-600 mx-auto mb-4" />
-              <CardTitle>Household Management</CardTitle>
+              <Users className="h-12 w-12 text-neon-green mx-auto mb-4 drop-shadow-lg" />
+              <CardTitle className="gradient-text">Household Management</CardTitle>
             </CardHeader>
             <CardContent>
               <CardDescription>
@@ -73,10 +77,10 @@ const LandingPage = () => {
             </CardContent>
           </Card>
 
-          <Card className="text-center">
+          <Card className="text-center glass-effect neon-border hover:neon-glow transition-all duration-300">
             <CardHeader>
-              <Package className="h-12 w-12 text-blue-600 mx-auto mb-4" />
-              <CardTitle>Smart Pantry</CardTitle>
+              <Package className="h-12 w-12 text-neon-blue mx-auto mb-4 drop-shadow-lg" />
+              <CardTitle className="gradient-text">Smart Pantry</CardTitle>
             </CardHeader>
             <CardContent>
               <CardDescription>
@@ -85,10 +89,10 @@ const LandingPage = () => {
             </CardContent>
           </Card>
 
-          <Card className="text-center">
+          <Card className="text-center glass-effect neon-border hover:neon-glow transition-all duration-300">
             <CardHeader>
-              <ChefHat className="h-12 w-12 text-purple-600 mx-auto mb-4" />
-              <CardTitle>Recipe Manager</CardTitle>
+              <ChefHat className="h-12 w-12 text-neon-purple mx-auto mb-4 drop-shadow-lg" />
+              <CardTitle className="gradient-text">Recipe Manager</CardTitle>
             </CardHeader>
             <CardContent>
               <CardDescription>
@@ -97,10 +101,10 @@ const LandingPage = () => {
             </CardContent>
           </Card>
 
-          <Card className="text-center">
+          <Card className="text-center glass-effect neon-border hover:neon-glow transition-all duration-300">
             <CardHeader>
-              <ShoppingCart className="h-12 w-12 text-orange-600 mx-auto mb-4" />
-              <CardTitle>Shopping Assistant</CardTitle>
+              <ShoppingCart className="h-12 w-12 text-neon-pink mx-auto mb-4 drop-shadow-lg" />
+              <CardTitle className="gradient-text">Shopping Assistant</CardTitle>
             </CardHeader>
             <CardContent>
               <CardDescription>
@@ -112,55 +116,55 @@ const LandingPage = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="bg-white py-16">
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+              <h2 className="text-3xl font-bold gradient-text mb-6">
                 Why Choose Sous-Chef?
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-green-600 mt-1" />
+                  <CheckCircle className="h-6 w-6 text-neon-green mt-1" />
                   <div>
-                    <h3 className="font-semibold text-gray-900">Save Time & Money</h3>
-                    <p className="text-gray-600">Reduce food waste and avoid unnecessary purchases with smart inventory tracking.</p>
+                    <h3 className="font-semibold text-foreground">Save Time & Money</h3>
+                    <p className="text-muted-foreground">Reduce food waste and avoid unnecessary purchases with smart inventory tracking.</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-green-600 mt-1" />
+                  <CheckCircle className="h-6 w-6 text-neon-green mt-1" />
                   <div>
-                    <h3 className="font-semibold text-gray-900">Personalized Experience</h3>
-                    <p className="text-gray-600">Tailored recommendations based on your household size, dietary needs, and preferences.</p>
+                    <h3 className="font-semibold text-foreground">Personalized Experience</h3>
+                    <p className="text-muted-foreground">Tailored recommendations based on your household size, dietary needs, and preferences.</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-green-600 mt-1" />
+                  <CheckCircle className="h-6 w-6 text-neon-green mt-1" />
                   <div>
-                    <h3 className="font-semibold text-gray-900">Easy Organization</h3>
-                    <p className="text-gray-600">Keep your recipes, pantry, and shopping lists organized in one convenient place.</p>
+                    <h3 className="font-semibold text-foreground">Easy Organization</h3>
+                    <p className="text-muted-foreground">Keep your recipes, pantry, and shopping lists organized in one convenient place.</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-green-600 mt-1" />
+                  <CheckCircle className="h-6 w-6 text-neon-green mt-1" />
                   <div>
-                    <h3 className="font-semibold text-gray-900">Cost Estimates</h3>
-                    <p className="text-gray-600">Get estimated costs for your shopping lists to better manage your budget.</p>
+                    <h3 className="font-semibold text-foreground">Cost Estimates</h3>
+                    <p className="text-muted-foreground">Get estimated costs for your shopping lists to better manage your budget.</p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg p-8">
+            <div className="glass-effect neon-border rounded-lg p-8 hover:neon-glow transition-all duration-300">
               <div className="text-center">
-                <Star className="h-16 w-16 text-yellow-500 mx-auto mb-4" />
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Ready to Get Started?</h3>
-                <p className="text-gray-600 mb-6">
+                <Star className="h-16 w-16 text-neon-pink mx-auto mb-4 drop-shadow-lg" />
+                <h3 className="text-2xl font-bold gradient-text mb-4">Ready to Get Started?</h3>
+                <p className="text-muted-foreground mb-6">
                   Join thousands of users who are already shopping smarter with Sous-Chef.
                 </p>
                 <Button 
                   size="lg" 
                   onClick={() => setShowAuth(true)}
-                  className="w-full"
+                  className="w-full gradient-bg text-white hover:opacity-90 transition-all duration-300"
                 >
                   Create Your Account
                 </Button>
@@ -171,14 +175,14 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-8">
+      <footer className="glass-effect border-t py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="flex items-center justify-center space-x-3 mb-4">
-              <ChefHat className="h-6 w-6 text-green-400" />
-              <span className="text-lg font-semibold">Sous-Chef</span>
+              <ChefHat className="h-6 w-6 text-neon-green" />
+              <span className="text-lg font-semibold gradient-text">Sous-Chef</span>
             </div>
-            <p className="text-gray-400">
+            <p className="text-muted-foreground">
               Your personal shopping assistant for smarter grocery shopping.
             </p>
           </div>

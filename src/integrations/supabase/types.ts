@@ -9,6 +9,27 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      custom_dietary_restrictions: {
+        Row: {
+          created_at: string
+          id: string
+          restriction: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          restriction: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          restriction?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       ingredient_prices: {
         Row: {
           country: string

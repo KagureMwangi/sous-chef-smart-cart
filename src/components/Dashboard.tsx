@@ -7,6 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { User } from '@supabase/supabase-js';
 import { ShoppingCart, ChefHat, Package, User as UserIcon, LogOut } from 'lucide-react';
+import { ThemeToggle } from './ThemeToggle';
 import ProfileSetup from './ProfileSetup';
 import RecipeManager from './RecipeManager';
 import PantryManager from './PantryManager';
@@ -35,17 +36,18 @@ const Dashboard = ({ user }: DashboardProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
-      <header className="bg-white shadow-sm border-b">
+    <div className="min-h-screen gradient-bg">
+      <header className="glass-effect border-b backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
-              <ChefHat className="h-8 w-8 text-green-600" />
-              <h1 className="text-2xl font-bold text-green-700">Sous-Chef</h1>
+              <ChefHat className="h-8 w-8 text-neon-green drop-shadow-lg" />
+              <h1 className="text-2xl font-bold gradient-text">Sous-Chef</h1>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600">Welcome, {user.email}</span>
-              <Button variant="outline" size="sm" onClick={handleSignOut}>
+              <span className="text-sm text-muted-foreground">Welcome, {user.email}</span>
+              <ThemeToggle />
+              <Button variant="outline" size="sm" onClick={handleSignOut} className="neon-border hover:neon-glow transition-all duration-300">
                 <LogOut className="h-4 w-4 mr-2" />
                 Sign Out
               </Button>
@@ -56,29 +58,29 @@ const Dashboard = ({ user }: DashboardProps) => {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-8">
-            <TabsTrigger value="profile" className="flex items-center space-x-2">
+          <TabsList className="grid w-full grid-cols-4 mb-8 glass-effect">
+            <TabsTrigger value="profile" className="flex items-center space-x-2 hover:text-neon-blue transition-colors">
               <UserIcon className="h-4 w-4" />
               <span>Profile</span>
             </TabsTrigger>
-            <TabsTrigger value="pantry" className="flex items-center space-x-2">
+            <TabsTrigger value="pantry" className="flex items-center space-x-2 hover:text-neon-green transition-colors">
               <Package className="h-4 w-4" />
               <span>Pantry</span>
             </TabsTrigger>
-            <TabsTrigger value="recipes" className="flex items-center space-x-2">
+            <TabsTrigger value="recipes" className="flex items-center space-x-2 hover:text-neon-purple transition-colors">
               <ChefHat className="h-4 w-4" />
               <span>Recipes</span>
             </TabsTrigger>
-            <TabsTrigger value="shopping" className="flex items-center space-x-2">
+            <TabsTrigger value="shopping" className="flex items-center space-x-2 hover:text-neon-pink transition-colors">
               <ShoppingCart className="h-4 w-4" />
               <span>Shopping</span>
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="profile">
-            <Card>
+            <Card className="glass-effect neon-border hover:neon-glow transition-all duration-300">
               <CardHeader>
-                <CardTitle>Profile Setup</CardTitle>
+                <CardTitle className="gradient-text">Profile Setup</CardTitle>
                 <CardDescription>
                   Configure your household information and dietary preferences
                 </CardDescription>
@@ -90,9 +92,9 @@ const Dashboard = ({ user }: DashboardProps) => {
           </TabsContent>
 
           <TabsContent value="pantry">
-            <Card>
+            <Card className="glass-effect neon-border hover:neon-glow transition-all duration-300">
               <CardHeader>
-                <CardTitle>Pantry Management</CardTitle>
+                <CardTitle className="gradient-text">Pantry Management</CardTitle>
                 <CardDescription>
                   Track what you have at home
                 </CardDescription>
@@ -104,9 +106,9 @@ const Dashboard = ({ user }: DashboardProps) => {
           </TabsContent>
 
           <TabsContent value="recipes">
-            <Card>
+            <Card className="glass-effect neon-border hover:neon-glow transition-all duration-300">
               <CardHeader>
-                <CardTitle>Recipe Manager</CardTitle>
+                <CardTitle className="gradient-text">Recipe Manager</CardTitle>
                 <CardDescription>
                   Add recipes and get ingredient lists with cost estimates
                 </CardDescription>
@@ -118,9 +120,9 @@ const Dashboard = ({ user }: DashboardProps) => {
           </TabsContent>
 
           <TabsContent value="shopping">
-            <Card>
+            <Card className="glass-effect neon-border hover:neon-glow transition-all duration-300">
               <CardHeader>
-                <CardTitle>Shopping Assistant</CardTitle>
+                <CardTitle className="gradient-text">Shopping Assistant</CardTitle>
                 <CardDescription>
                   Get personalized shopping recommendations
                 </CardDescription>
