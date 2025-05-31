@@ -91,7 +91,7 @@ const LandingPage = () => {
 
           <Card className="text-center glass-effect neon-border hover:neon-glow transition-all duration-300">
             <CardHeader>
-              <ChefHat className="h-12 w-12 text-neon-purple mx-auto mb-4 drop-shadow-lg" />
+              <ChefHat className="h-12 w-12 text-neon-cyan mx-auto mb-4 drop-shadow-lg" />
               <CardTitle className="gradient-text">Recipe Manager</CardTitle>
             </CardHeader>
             <CardContent>
@@ -103,7 +103,7 @@ const LandingPage = () => {
 
           <Card className="text-center glass-effect neon-border hover:neon-glow transition-all duration-300">
             <CardHeader>
-              <ShoppingCart className="h-12 w-12 text-neon-pink mx-auto mb-4 drop-shadow-lg" />
+              <ShoppingCart className="h-12 w-12 text-neon-green mx-auto mb-4 drop-shadow-lg" />
               <CardTitle className="gradient-text">Shopping Assistant</CardTitle>
             </CardHeader>
             <CardContent>
@@ -156,7 +156,7 @@ const LandingPage = () => {
             </div>
             <div className="glass-effect neon-border rounded-lg p-8 hover:neon-glow transition-all duration-300">
               <div className="text-center">
-                <Star className="h-16 w-16 text-neon-pink mx-auto mb-4 drop-shadow-lg" />
+                <Star className="h-16 w-16 text-neon-cyan mx-auto mb-4 drop-shadow-lg" />
                 <h3 className="text-2xl font-bold gradient-text mb-4">Ready to Get Started?</h3>
                 <p className="text-muted-foreground mb-6">
                   Join thousands of users who are already shopping smarter with Sous-Chef.

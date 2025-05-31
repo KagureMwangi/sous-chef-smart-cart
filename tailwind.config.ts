@@ -66,8 +66,6 @@ export default {
 				neon: {
 					blue: 'hsl(var(--neon-blue))',
 					green: 'hsl(var(--neon-green))',
-					purple: 'hsl(var(--neon-purple))',
-					pink: 'hsl(var(--neon-pink))',
 					cyan: 'hsl(var(--neon-cyan))'
 				}
 			},
@@ -98,7 +96,7 @@ export default {
 						boxShadow: '0 0 20px hsl(var(--neon-blue) / 0.5)' 
 					},
 					'50%': { 
-						boxShadow: '0 0 30px hsl(var(--neon-blue) / 0.8), 0 0 40px hsl(var(--neon-purple) / 0.4)' 
+						boxShadow: '0 0 30px hsl(var(--neon-blue) / 0.8), 0 0 40px hsl(var(--neon-cyan) / 0.4)' 
 					}
 				}
 			},

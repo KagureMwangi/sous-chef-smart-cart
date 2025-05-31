@@ -67,11 +67,11 @@ const Dashboard = ({ user }: DashboardProps) => {
               <Package className="h-4 w-4" />
               <span>Pantry</span>
             </TabsTrigger>
-            <TabsTrigger value="recipes" className="flex items-center space-x-2 hover:text-neon-purple transition-colors">
+            <TabsTrigger value="recipes" className="flex items-center space-x-2 hover:text-neon-cyan transition-colors">
               <ChefHat className="h-4 w-4" />
               <span>Recipes</span>
             </TabsTrigger>
-            <TabsTrigger value="shopping" className="flex items-center space-x-2 hover:text-neon-pink transition-colors">
+            <TabsTrigger value="shopping" className="flex items-center space-x-2 hover:text-neon-blue transition-colors">
               <ShoppingCart className="h-4 w-4" />
               <span>Shopping</span>
             </TabsTrigger>
