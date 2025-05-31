@@ -62,8 +62,8 @@ export default {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))'
         },
-        sage: 'hsl(var(--theme-sage))',
-        olive: 'hsl(var(--theme-olive))',
+        mustard: 'hsl(var(--theme-mustard))',
+        orange: 'hsl(var(--theme-orange))',
         clay: 'hsl(var(--theme-clay))'
       },
       borderRadius: {

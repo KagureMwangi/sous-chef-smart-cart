@@ -44,8 +44,8 @@
     --sidebar-ring: 220.9 39.3% 11%;
 
     /* Professional theme colors */
-    --theme-sage: 150 15% 40%;
-    --theme-olive: 110 25% 35%;
+    --theme-mustard: 43 96% 56%;
+    --theme-orange: 27 98% 40%;
     --theme-clay: 20 25% 45%;
   }
 
@@ -88,8 +88,8 @@
     --sidebar-ring: 210 20% 98%;
 
     /* Professional theme colors - dark mode */
-    --theme-sage: 150 15% 60%;
-    --theme-olive: 110 25% 55%;
+    --theme-mustard: 43 96% 65%;
+    --theme-orange: 27 98% 50%;
     --theme-clay: 20 25% 65%;
   }
 }
@@ -111,7 +111,7 @@
 
 @layer utilities {
   .gradient-bg {
-    @apply bg-gradient-to-br from-sage to-olive;
+    @apply bg-gradient-to-br from-mustard to-orange;
   }
   
   .gradient-text {
