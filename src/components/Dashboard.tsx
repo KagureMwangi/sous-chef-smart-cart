@@ -6,12 +6,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { User } from '@supabase/supabase-js';
-import { ShoppingCart, ChefHat, Package, User as UserIcon, LogOut } from 'lucide-react';
+import { ShoppingCart, ChefHat, Package, User as UserIcon, LogOut, MessageSquare } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import ProfileSetup from './ProfileSetup';
 import RecipeManager from './RecipeManager';
 import PantryManager from './PantryManager';
 import ShoppingAssistant from './ShoppingAssistant';
+import CopilotChat from './CopilotChat';
 
 interface DashboardProps {
   user: User;
@@ -58,7 +59,7 @@ const Dashboard = ({ user }: DashboardProps) => {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-8 glass-effect">
+          <TabsList className="grid w-full grid-cols-5 mb-8 glass-effect">
             <TabsTrigger value="profile" className="flex items-center space-x-2 hover:text-neon-blue transition-colors text-high-contrast">
               <UserIcon className="h-4 w-4" />
               <span>Profile</span>
@@ -74,6 +75,10 @@ const Dashboard = ({ user }: DashboardProps) => {
             <TabsTrigger value="shopping" className="flex items-center space-x-2 hover:text-neon-blue transition-colors text-high-contrast">
               <ShoppingCart className="h-4 w-4" />
               <span>Shopping</span>
+            </TabsTrigger>
+            <TabsTrigger value="chat" className="flex items-center space-x-2 hover:text-neon-green transition-colors text-high-contrast">
+              <MessageSquare className="h-4 w-4" />
+              <span>Assistant</span>
             </TabsTrigger>
           </TabsList>
 
@@ -129,6 +134,20 @@ const Dashboard = ({ user }: DashboardProps) => {
               </CardHeader>
               <CardContent>
                 <ShoppingAssistant user={user} />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="chat">
+            <Card className="glass-effect neon-border hover:neon-glow transition-all duration-300">
+              <CardHeader>
+                <CardTitle className="gradient-text">AI Assistant</CardTitle>
+                <CardDescription className="text-high-contrast">
+                  Chat with your culinary copilot assistant
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <CopilotChat />
               </CardContent>
             </Card>
           </TabsContent>
