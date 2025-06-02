@@ -30,6 +30,11 @@ const CopilotChat = () => {
   const handleSendMessage = async () => {
     if (!userInput.trim()) return;
 
+    console.log('🚀 Starting message send process...');
+    console.log('📤 User input:', userInput);
+    console.log('🔗 Current conversation ID:', currentConversationId);
+    console.log('🎫 Current direct line token:', currentDirectLineToken);
+
     // Add user message to conversation
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
@@ -41,28 +46,45 @@ const CopilotChat = () => {
     setMessages(prev => [...prev, userMessage]);
     setIsLoading(true);
 
+    const requestPayload = {
+      userInput,
+      currentConversationId,
+      currentDirectLineToken,
+    };
+
+    console.log('📦 Request payload:', requestPayload);
+
     try {
+      console.log('🌐 Making fetch request to:', 'https://tlzgtdnnuzqvzpxexlsm.supabase.co/functions/v1/copilot-agent');
+      
       const response = await fetch('https://tlzgtdnnuzqvzpxexlsm.supabase.co/functions/v1/copilot-agent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRsemd0ZG5udXpxdnpweGV4bHNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg0NDc0OTksImV4cCI6MjA2NDAyMzQ5OX0.j3S8ZrJ_SJzaNDOwU55ebx6Mb5W3OByNp3nihnSZpPk'}`,
         },
-        body: JSON.stringify({
-          userInput,
-          currentConversationId,
-          currentDirectLineToken,
-        }),
+        body: JSON.stringify(requestPayload),
       });
 
+      console.log('📡 Response status:', response.status);
+      console.log('📡 Response headers:', Object.fromEntries(response.headers.entries()));
+      console.log('✅ Response ok:', response.ok);
+
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        console.error('❌ Error response text:', errorText);
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
       }
 
       const data: CopilotResponse = await response.json();
+      console.log('📥 Response data:', data);
 
       // Update conversation state
       setCurrentConversationId(data.conversationId);
       setCurrentDirectLineToken(data.directLineToken);
+
+      console.log('🔄 Updated conversation ID:', data.conversationId);
+      console.log('🔄 Updated direct line token:', data.directLineToken);
 
       // Add bot response to conversation
       const botMessage: ChatMessage = {
@@ -73,16 +95,33 @@ const CopilotChat = () => {
       };
 
       setMessages(prev => [...prev, botMessage]);
+      console.log('✅ Successfully added bot message');
     } catch (error) {
-      console.error('Error sending message:', error);
-      toast({
-        title: "Error",
-        description: "Failed to send message. Please try again.",
-        variant: "destructive",
-      });
+      console.error('💥 Detailed error information:');
+      console.error('Error type:', typeof error);
+      console.error('Error name:', error instanceof Error ? error.name : 'Unknown');
+      console.error('Error message:', error instanceof Error ? error.message : String(error));
+      console.error('Full error object:', error);
+      
+      // Check if it's a network error
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        console.error('🌐 This appears to be a network connectivity issue');
+        toast({
+          title: "Network Error",
+          description: "Unable to connect to the server. Please check your internet connection and try again.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: `Failed to send message: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsLoading(false);
       setUserInput('');
+      console.log('🏁 Message send process completed');
     }
   };
 
@@ -102,12 +141,21 @@ const CopilotChat = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
+        {/* Debug Info */}
+        <div className="text-xs text-muted-foreground bg-muted/50 p-2 rounded">
+          <p>🔍 Debug Info:</p>
+          <p>API Endpoint: https://tlzgtdnnuzqvzpxexlsm.supabase.co/functions/v1/copilot-agent</p>
+          <p>Conversation ID: {currentConversationId || 'Not set'}</p>
+          <p>Token Status: {currentDirectLineToken ? 'Available' : 'Not available'}</p>
+        </div>
+
         {/* Messages Display Area */}
         <div className="h-96 overflow-y-auto border rounded-lg p-4 space-y-3 bg-background/50">
           {messages.length === 0 ? (
             <div className="text-center text-muted-foreground py-8">
               <Bot className="h-12 w-12 mx-auto mb-4 opacity-50" />
               <p>Start a conversation with the Copilot assistant</p>
+              <p className="text-xs mt-2">Check the browser console for detailed logs</p>
             </div>
           ) : (
             messages.map((message) => (
