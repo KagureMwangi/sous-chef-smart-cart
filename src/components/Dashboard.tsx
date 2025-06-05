@@ -6,13 +6,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { User } from '@supabase/supabase-js';
-import { ShoppingCart, ChefHat, Package, User as UserIcon, LogOut, MessageSquare } from 'lucide-react';
+import { ShoppingCart, ChefHat, Package, User as UserIcon, LogOut, MessageSquare, Send } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import ProfileSetup from './ProfileSetup';
 import RecipeManager from './RecipeManager';
 import PantryManager from './PantryManager';
 import ShoppingAssistant from './ShoppingAssistant';
 import CopilotChat from './CopilotChat';
+import ApiRequestForm from './ApiRequestForm';
 
 interface DashboardProps {
   user: User;
@@ -59,7 +60,7 @@ const Dashboard = ({ user }: DashboardProps) => {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-5 mb-8 glass-effect">
+          <TabsList className="grid w-full grid-cols-6 mb-8 glass-effect">
             <TabsTrigger value="profile" className="flex items-center space-x-2 hover:text-neon-blue transition-colors text-high-contrast">
               <UserIcon className="h-4 w-4" />
               <span>Profile</span>
@@ -79,6 +80,10 @@ const Dashboard = ({ user }: DashboardProps) => {
             <TabsTrigger value="chat" className="flex items-center space-x-2 hover:text-neon-green transition-colors text-high-contrast">
               <MessageSquare className="h-4 w-4" />
               <span>Assistant</span>
+            </TabsTrigger>
+            <TabsTrigger value="api" className="flex items-center space-x-2 hover:text-neon-cyan transition-colors text-high-contrast">
+              <Send className="h-4 w-4" />
+              <span>API Test</span>
             </TabsTrigger>
           </TabsList>
 
@@ -148,6 +153,20 @@ const Dashboard = ({ user }: DashboardProps) => {
               </CardHeader>
               <CardContent>
                 <CopilotChat />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="api">
+            <Card className="glass-effect neon-border hover:neon-glow transition-all duration-300">
+              <CardHeader>
+                <CardTitle className="gradient-text">API Request Test</CardTitle>
+                <CardDescription className="text-high-contrast">
+                  Send test requests to external APIs
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ApiRequestForm />
               </CardContent>
             </Card>
           </TabsContent>
