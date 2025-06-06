@@ -32,7 +32,7 @@ const ApiRequestForm = () => {
     try {
       console.log('Sending API request with user input:', userInput);
       
-      const response = await fetch('https://hook.eu2.make.com/4y6p5i8y7jnbwbn3g37nx83wx9hoe81o', {
+      const response = await fetch('https://hook.eu2.make.com/x1eewfqg524956lhe3es82iuu4tg8ggv', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -158,7 +158,7 @@ const ApiRequestForm = () => {
         )}
 
         <div className="mt-4 text-xs text-muted-foreground">
-          <p>Endpoint: https://hook.eu2.make.com/4y6p5i8y7jnbwbn3g37nx83wx9hoe81o</p>
+          <p>Endpoint: https://hook.eu2.make.com/x1eewfqg524956lhe3es82iuu4tg8ggv</p>
           <p>Method: POST</p>
           <p>Expected response field: "reply"</p>
         </div>
