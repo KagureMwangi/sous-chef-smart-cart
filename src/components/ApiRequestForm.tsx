@@ -154,7 +154,7 @@ const ApiRequestForm = () => {
 
         <div className="mt-4 text-xs text-muted-foreground">
           <p>Backend: https://94c5-197-248-103-242.ngrok-free.app/</p>
-          <p>Method: POST | Format: {"user_input": "message"} | Expects: {"reply": "response"}</p>
+          <p>Method: POST | Format: {JSON.stringify({"user_input": "message"})} | Expects: {JSON.stringify({"reply": "response"})}</p>
         </div>
       </CardContent>
     </Card>
