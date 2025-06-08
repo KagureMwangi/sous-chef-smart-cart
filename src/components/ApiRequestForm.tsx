@@ -34,7 +34,7 @@ const ApiRequestForm = () => {
     try {
       console.log('Sending message to custom backend:', userMessage);
       
-      const response = await fetch('https://94c5-197-248-103-242.ngrok-free.app/', {
+      const response = await fetch('https://dc9e-197-248-103-242.ngrok-free.app/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -153,7 +153,7 @@ const ApiRequestForm = () => {
         </form>
 
         <div className="mt-4 text-xs text-muted-foreground">
-          <p>Backend: https://94c5-197-248-103-242.ngrok-free.app/</p>
+          <p>Backend: https://dc9e-197-248-103-242.ngrok-free.app/</p>
           <p>Method: POST | Format: {JSON.stringify({"user_input": "message"})} | Expects: {JSON.stringify({"reply": "response"})}</p>
         </div>
       </CardContent>
