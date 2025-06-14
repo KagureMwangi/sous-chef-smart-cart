@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -95,39 +96,39 @@ const ApiRequestForm = () => {
   };
 
   return (
-    <Card className="glass-effect neon-border hover:neon-glow transition-all duration-300 max-w-4xl mx-auto h-[600px] flex flex-col">
-      <CardHeader className="flex-shrink-0">
-        <CardTitle className="gradient-text flex items-center space-x-2">
-          <Send className="h-6 w-6" />
+    <Card className="glass-effect neon-border hover:neon-glow transition-all duration-300 w-full max-w-5xl sm:max-w-6xl mx-auto h-[600px] flex flex-col px-2 sm:px-4">
+      <CardHeader className="flex-shrink-0 px-2 sm:px-6">
+        <CardTitle className="gradient-text flex items-center space-x-2 text-lg sm:text-2xl">
+          <Send className="h-5 w-5 sm:h-6 sm:w-6" />
           <span>AI Question Assistant</span>
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex-1 flex flex-col min-h-0">
+      <CardContent className="flex-1 flex flex-col min-h-0 px-2 sm:px-6">
         {/* Chat Messages with ScrollArea */}
         <div className="flex-1 min-h-0 mb-4">
           <ScrollArea ref={scrollAreaRef} className="h-full border rounded-lg bg-background/50">
-            <div className="p-4 space-y-4">
+            <div className="p-2 sm:p-4 space-y-3 sm:space-y-4">
               {conversation.length === 0 ? (
-                <div className="text-center text-muted-foreground py-8">
-                  <Bot className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                  <p>Ask me anything! I'm here to help answer your questions.</p>
+                <div className="text-center text-muted-foreground py-6 sm:py-8">
+                  <Bot className="h-10 w-10 sm:h-12 sm:w-12 mx-auto mb-4 opacity-50" />
+                  <p className="text-sm sm:text-base">Ask me anything! I'm here to help answer your questions.</p>
                 </div>
               ) : (
                 conversation.map((item, index) => (
-                  <div key={index} className="flex items-start space-x-3">
+                  <div key={index} className="flex items-start space-x-2 sm:space-x-3">
                     <div className="flex-shrink-0">
                       {item.type === 'user' ? (
-                        <User className="h-5 w-5 text-blue-500" />
+                        <User className="h-4 w-4 sm:h-5 sm:w-5 text-blue-500" />
                       ) : (
-                        <Bot className="h-5 w-5 text-green-500" />
+                        <Bot className="h-4 w-4 sm:h-5 sm:w-5 text-green-500" />
                       )}
                     </div>
-                    <div className={`flex-1 rounded-lg p-3 break-words ${
+                    <div className={`flex-1 rounded-lg p-2 sm:p-3 break-words ${
                       item.type === 'user' 
                         ? 'bg-blue-50 dark:bg-blue-900/20' 
                         : 'bg-gray-50 dark:bg-gray-800'
                     }`}>
-                      <p className="text-sm whitespace-pre-wrap">{item.message}</p>
+                      <p className="text-xs sm:text-sm whitespace-pre-wrap">{item.message}</p>
                     </div>
                   </div>
                 ))
@@ -135,12 +136,12 @@ const ApiRequestForm = () => {
               
               {/* Loading indicator */}
               {isLoading && (
-                <div className="flex items-start space-x-3">
+                <div className="flex items-start space-x-2 sm:space-x-3">
                   <div className="flex-shrink-0">
-                    <Bot className="h-5 w-5 text-green-500" />
+                    <Bot className="h-4 w-4 sm:h-5 sm:w-5 text-green-500" />
                   </div>
-                  <div className="flex-1 bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
-                    <p className="text-sm text-muted-foreground">AI is thinking...</p>
+                  <div className="flex-1 bg-gray-50 dark:bg-gray-800 rounded-lg p-2 sm:p-3">
+                    <p className="text-xs sm:text-sm text-muted-foreground">AI is thinking...</p>
                   </div>
                 </div>
               )}
@@ -156,21 +157,21 @@ const ApiRequestForm = () => {
               onChange={(e) => setUserInput(e.target.value)}
               placeholder="Ask me anything..."
               disabled={isLoading}
-              className="flex-1"
+              className="flex-1 text-sm sm:text-base"
               autoFocus
             />
             <Button
               type="submit"
               disabled={isLoading || !userInput.trim()}
-              className="neon-border hover:neon-glow transition-all duration-300"
+              className="neon-border hover:neon-glow transition-all duration-300 px-3 sm:px-4"
             >
-              <Send className="h-4 w-4" />
+              <Send className="h-3 w-3 sm:h-4 sm:w-4" />
             </Button>
           </form>
 
           <div className="mt-4 text-xs text-muted-foreground">
-            <p>Backend: https://zgroq.onrender.com/webhook</p>
-            <p>Method: POST | Format: {JSON.stringify({"user_input": "message"})} | Expects: {JSON.stringify({"reply": "response"})}</p>
+            <p className="break-all">Backend: https://zgroq.onrender.com/webhook</p>
+            <p className="break-all">Method: POST | Format: {JSON.stringify({"user_input": "message"})} | Expects: {JSON.stringify({"reply": "response"})}</p>
           </div>
         </div>
       </CardContent>
