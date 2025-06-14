@@ -32,9 +32,9 @@ const ApiRequestForm = () => {
     setUserInput(''); // Clear input immediately
 
     try {
-      console.log('Sending message to custom backend:', userMessage);
+      console.log('Sending message to zgroq backend:', userMessage);
       
-      const response = await fetch('https://dc9e-197-248-103-242.ngrok-free.app/webhook', {
+      const response = await fetch('https://zgroq.onrender.com/webhook', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ const ApiRequestForm = () => {
       <CardHeader>
         <CardTitle className="gradient-text flex items-center space-x-2">
           <Send className="h-6 w-6" />
-          <span>Custom Backend Chat</span>
+          <span>AI Question Assistant</span>
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col">
@@ -97,7 +97,7 @@ const ApiRequestForm = () => {
           {conversation.length === 0 ? (
             <div className="text-center text-muted-foreground py-8">
               <Bot className="h-12 w-12 mx-auto mb-4 opacity-50" />
-              <p>Start a conversation with your custom backend!</p>
+              <p>Ask me anything! I'm here to help answer your questions.</p>
             </div>
           ) : (
             conversation.map((item, index) => (
@@ -127,7 +127,7 @@ const ApiRequestForm = () => {
                 <Bot className="h-5 w-5 text-green-500" />
               </div>
               <div className="flex-1 bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
-                <p className="text-sm text-muted-foreground">Backend is processing your message...</p>
+                <p className="text-sm text-muted-foreground">AI is thinking...</p>
               </div>
             </div>
           )}
@@ -138,7 +138,7 @@ const ApiRequestForm = () => {
           <Input
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
-            placeholder="Type your message here..."
+            placeholder="Ask me anything..."
             disabled={isLoading}
             className="flex-1"
             autoFocus
@@ -153,7 +153,7 @@ const ApiRequestForm = () => {
         </form>
 
         <div className="mt-4 text-xs text-muted-foreground">
-          <p>Backend: https://dc9e-197-248-103-242.ngrok-free.app/webhook</p>
+          <p>Backend: https://zgroq.onrender.com/webhook</p>
           <p>Method: POST | Format: {JSON.stringify({"user_input": "message"})} | Expects: {JSON.stringify({"reply": "response"})}</p>
         </div>
       </CardContent>
