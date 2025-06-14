@@ -8,9 +8,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { ThemeToggle } from './ThemeToggle';
-import { ChefHat } from 'lucide-react';
+import { ChefHat, ArrowLeft } from 'lucide-react';
 
-const Auth = () => {
+interface AuthProps {
+  onBackToHome?: () => void;
+}
+
+const Auth = ({ onBackToHome }: AuthProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -73,6 +77,19 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen gradient-bg flex items-center justify-center p-4">
+      <div className="absolute top-4 left-4">
+        {onBackToHome && (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onBackToHome}
+            className="text-high-contrast hover:bg-white/10 hover:text-neon-green transition-colors"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+        )}
+      </div>
+      
       <div className="absolute top-4 right-4">
         <ThemeToggle />
       </div>

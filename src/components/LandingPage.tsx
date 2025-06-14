@@ -10,7 +10,7 @@ const LandingPage = () => {
   const [showAuth, setShowAuth] = useState(false);
 
   if (showAuth) {
-    return <Auth />;
+    return <Auth onBackToHome={() => setShowAuth(false)} />;
   }
 
   return (
