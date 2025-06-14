@@ -307,6 +307,90 @@ export type Database = {
           },
         ]
       }
+      shopping_list_items: {
+        Row: {
+          created_at: string
+          custom_item_name: string | null
+          estimated_price: number | null
+          id: string
+          ingredient_id: string | null
+          is_purchased: boolean | null
+          notes: string | null
+          quantity: number
+          shopping_list_id: string
+          unit: Database["public"]["Enums"]["unit_type"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          custom_item_name?: string | null
+          estimated_price?: number | null
+          id?: string
+          ingredient_id?: string | null
+          is_purchased?: boolean | null
+          notes?: string | null
+          quantity: number
+          shopping_list_id: string
+          unit: Database["public"]["Enums"]["unit_type"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          custom_item_name?: string | null
+          estimated_price?: number | null
+          id?: string
+          ingredient_id?: string | null
+          is_purchased?: boolean | null
+          notes?: string | null
+          quantity?: number
+          shopping_list_id?: string
+          unit?: Database["public"]["Enums"]["unit_type"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shopping_list_items_ingredient_id_fkey"
+            columns: ["ingredient_id"]
+            isOneToOne: false
+            referencedRelation: "ingredients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shopping_list_items_shopping_list_id_fkey"
+            columns: ["shopping_list_id"]
+            isOneToOne: false
+            referencedRelation: "shopping_lists"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      shopping_lists: {
+        Row: {
+          created_at: string
+          id: string
+          is_completed: boolean | null
+          name: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_completed?: boolean | null
+          name?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_completed?: boolean | null
+          name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       shopping_trips: {
         Row: {
           created_at: string

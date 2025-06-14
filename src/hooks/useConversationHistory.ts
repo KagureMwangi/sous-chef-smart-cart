@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -7,6 +8,14 @@ export interface ConversationMessage {
   message: string;
   timestamp: Date;
   containsRecipe?: boolean;
+  suggestedItems?: SuggestedShoppingItem[];
+}
+
+export interface SuggestedShoppingItem {
+  name: string;
+  quantity: number;
+  unit: string;
+  category?: string;
 }
 
 export const useConversationHistory = (userId?: string) => {
@@ -53,7 +62,8 @@ export const useConversationHistory = (userId?: string) => {
         message.message.toLowerCase().includes('ingredient') ||
         message.message.toLowerCase().includes('cook') ||
         message.message.toLowerCase().includes('bake')
-      )
+      ),
+      suggestedItems: message.suggestedItems || extractShoppingItems(message.message)
     };
 
     setConversation(prev => {
@@ -61,6 +71,31 @@ export const useConversationHistory = (userId?: string) => {
       // Keep only the last 50 messages to prevent storage overflow
       return updated.slice(-50);
     });
+  };
+
+  const extractShoppingItems = (message: string): SuggestedShoppingItem[] => {
+    if (!message.toLowerCase().includes('shopping') && !message.toLowerCase().includes('buy')) {
+      return [];
+    }
+
+    // Simple extraction logic - this could be made more sophisticated
+    const items: SuggestedShoppingItem[] = [];
+    const lines = message.split('\n');
+    
+    lines.forEach(line => {
+      // Look for lines that might contain shopping items
+      const itemMatch = line.match(/[-*]\s*(\d+(?:\.\d+)?)\s*(\w+)\s+(.+?)(?:\s*-|$)/i);
+      if (itemMatch) {
+        const [, quantity, unit, name] = itemMatch;
+        items.push({
+          name: name.trim(),
+          quantity: parseFloat(quantity),
+          unit: unit.toLowerCase(),
+        });
+      }
+    });
+
+    return items;
   };
 
   const getRecentRecipes = () => {
