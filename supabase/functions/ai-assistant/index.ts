@@ -118,9 +118,13 @@ serve(async (req) => {
       contextualInfo += `\n\nHousehold Information:\n- Household size: ${profile.household_size}\n- Country: ${profile.country}\n- Currency: ${profile.currency}\n`;
     }
 
-    // Enhanced prompt with context
+    // Enhanced prompt with context and cost estimation instructions
+    const costEstimationInstructions = profile ? `
+
+IMPORTANT: When providing recipes or meal suggestions, ALWAYS include cost estimations in ${profile.currency} for ${profile.country}. Break down costs by ingredient and provide a total estimated cost. Consider local pricing for the user's country (${profile.country}) and adjust estimates accordingly. Format costs clearly and mention if ingredients are already available in the user's pantry to show potential savings.` : '';
+
     const enhancedPrompt = contextualInfo 
-      ? `${userInput}\n\n--- User Context ---${contextualInfo}\n\nPlease consider the user's pantry items, dietary restrictions, and household information when providing your response. If the question is about what they have available, cooking suggestions, or meal planning, use this information to give personalized advice.`
+      ? `${userInput}\n\n--- User Context ---${contextualInfo}${costEstimationInstructions}\n\nPlease consider the user's pantry items, dietary restrictions, household information, and provide cost estimations in their local currency when giving recipe suggestions or meal planning advice.`
       : userInput;
 
     console.log('Sending to backend with context:', enhancedPrompt.substring(0, 200) + '...');
