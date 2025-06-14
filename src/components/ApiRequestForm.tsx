@@ -10,6 +10,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useConversationHistory } from '@/hooks/useConversationHistory';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import RecentRecipes from './RecentRecipes';
+import RecipeActions from './RecipeActions';
 
 interface ApiRequestFormProps {
   userId?: string;
@@ -21,7 +22,7 @@ const ApiRequestForm = ({ userId }: ApiRequestFormProps) => {
   const { toast } = useToast();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   
-  const { conversation, addMessage, getRecentRecipes, clearHistory } = useConversationHistory(userId);
+  const { conversation, addMessage, getRecentRecipes, clearHistory, saveRecipeToManager } = useConversationHistory(userId);
 
   // Auto-scroll to bottom when new messages are added
   useEffect(() => {
@@ -174,6 +175,13 @@ const ApiRequestForm = ({ userId }: ApiRequestFormProps) => {
                             Recipe
                           </span>
                         </div>
+                      )}
+                      {/* Recipe Actions */}
+                      {item.type === 'bot' && item.containsRecipe && userId && (
+                        <RecipeActions 
+                          recipe={item} 
+                          onSaveRecipe={saveRecipeToManager}
+                        />
                       )}
                     </div>
                   </div>

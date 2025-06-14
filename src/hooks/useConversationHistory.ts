@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 export interface ConversationMessage {
   id: string;
@@ -98,6 +99,120 @@ export const useConversationHistory = (userId?: string) => {
     return items;
   };
 
+  const saveRecipeToManager = async (recipe: ConversationMessage) => {
+    if (!userId || !recipe.containsRecipe) {
+      toast({
+        title: "Error",
+        description: "Cannot save this message as a recipe.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      // Extract recipe details from the message
+      const recipeData = extractRecipeFromMessage(recipe.message);
+      
+      const { error } = await supabase
+        .from('user_recipes')
+        .insert({
+          user_id: userId,
+          recipe_name: recipeData.name,
+          recipe_description: recipeData.description,
+          ingredients: recipeData.ingredients,
+          instructions: recipeData.instructions,
+          prep_time: recipeData.prepTime,
+          cook_time: recipeData.cookTime,
+          servings: recipeData.servings,
+          source: 'searched',
+        });
+
+      if (error) {
+        console.error('Error saving recipe:', error);
+        toast({
+          title: "Error",
+          description: "Failed to save recipe. Please try again.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      toast({
+        title: "Recipe Saved!",
+        description: "Recipe has been added to your collection.",
+      });
+    } catch (error) {
+      console.error('Error saving recipe:', error);
+      toast({
+        title: "Error",
+        description: "Failed to save recipe. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const extractRecipeFromMessage = (message: string) => {
+    const lines = message.split('\n');
+    let recipeName = 'AI Recipe';
+    let description = '';
+    let ingredients: string[] = [];
+    let instructions = '';
+    let prepTime: number | null = null;
+    let cookTime: number | null = null;
+    let servings: number | null = null;
+
+    // Extract recipe name (look for title-like lines)
+    for (const line of lines) {
+      if (line.includes('Recipe') && line.length < 100 && !line.toLowerCase().includes('ingredient')) {
+        recipeName = line.replace(/\*\*/g, '').replace(/#+/g, '').trim();
+        break;
+      }
+    }
+
+    let currentSection = '';
+    for (const line of lines) {
+      const trimmedLine = line.trim();
+      
+      if (trimmedLine.toLowerCase().includes('ingredient')) {
+        currentSection = 'ingredients';
+        continue;
+      } else if (trimmedLine.toLowerCase().includes('instruction') || trimmedLine.toLowerCase().includes('direction')) {
+        currentSection = 'instructions';
+        continue;
+      } else if (trimmedLine.toLowerCase().includes('prep time')) {
+        const timeMatch = trimmedLine.match(/(\d+)/);
+        if (timeMatch) prepTime = parseInt(timeMatch[1]);
+        continue;
+      } else if (trimmedLine.toLowerCase().includes('cook time')) {
+        const timeMatch = trimmedLine.match(/(\d+)/);
+        if (timeMatch) cookTime = parseInt(timeMatch[1]);
+        continue;
+      } else if (trimmedLine.toLowerCase().includes('serving')) {
+        const servingMatch = trimmedLine.match(/(\d+)/);
+        if (servingMatch) servings = parseInt(servingMatch[1]);
+        continue;
+      }
+
+      if (currentSection === 'ingredients' && trimmedLine.match(/^[-*•]\s/)) {
+        ingredients.push(trimmedLine.replace(/^[-*•]\s/, ''));
+      } else if (currentSection === 'instructions' && trimmedLine) {
+        instructions += trimmedLine + '\n';
+      } else if (!currentSection && trimmedLine && !description) {
+        description = trimmedLine;
+      }
+    }
+
+    return {
+      name: recipeName,
+      description: description || 'Recipe from AI Assistant',
+      ingredients,
+      instructions: instructions.trim(),
+      prepTime,
+      cookTime,
+      servings,
+    };
+  };
+
   const getRecentRecipes = () => {
     return conversation
       .filter(msg => msg.type === 'bot' && msg.containsRecipe)
@@ -123,5 +238,6 @@ export const useConversationHistory = (userId?: string) => {
     addMessage,
     getRecentRecipes,
     clearHistory,
+    saveRecipeToManager,
   };
 };
