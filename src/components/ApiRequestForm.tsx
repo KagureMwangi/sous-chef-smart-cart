@@ -84,8 +84,8 @@ const ApiRequestForm = ({ userId }: ApiRequestFormProps) => {
   const recentRecipes = getRecentRecipes();
 
   return (
-    <Card className="glass-effect neon-border hover:neon-glow transition-all duration-300 w-full max-w-5xl sm:max-w-6xl mx-auto h-[600px] flex flex-col px-2 sm:px-4">
-      <CardHeader className="flex-shrink-0 px-2 sm:px-6">
+    <Card className="glass-effect neon-border hover:neon-glow transition-all duration-300 w-full max-w-full mx-auto h-[600px] flex flex-col px-1 sm:px-4">
+      <CardHeader className="flex-shrink-0 px-1 sm:px-6">
         <ChatHeader
           recentRecipes={recentRecipes}
           conversationLength={conversation.length}
@@ -93,7 +93,7 @@ const ApiRequestForm = ({ userId }: ApiRequestFormProps) => {
         />
       </CardHeader>
       
-      <CardContent className="flex-1 flex flex-col min-h-0 px-2 sm:px-6">
+      <CardContent className="flex-1 flex flex-col min-h-0 px-1 sm:px-6">
         <ChatMessages
           conversation={conversation}
           isLoading={isLoading}

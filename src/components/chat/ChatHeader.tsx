@@ -16,24 +16,24 @@ interface ChatHeaderProps {
 
 const ChatHeader = ({ recentRecipes, conversationLength, onClearHistory }: ChatHeaderProps) => {
   return (
-    <div className="flex justify-between items-center">
-      <CardTitle className="gradient-text flex items-center space-x-2 text-lg sm:text-2xl">
-        <Send className="h-5 w-5 sm:h-6 sm:w-6" />
-        <span>AI Question Assistant</span>
+    <div className="flex justify-between items-center flex-wrap gap-2">
+      <CardTitle className="gradient-text flex items-center space-x-1 sm:space-x-2 text-base sm:text-lg md:text-2xl min-w-0">
+        <Send className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 flex-shrink-0" />
+        <span className="truncate">AI Question Assistant</span>
       </CardTitle>
       
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
         {/* Recent Recipes Dialog */}
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="outline" size="sm" className="neon-border">
-              <History className="h-4 w-4 mr-1" />
-              Recipes ({recentRecipes.length})
+            <Button variant="outline" size="sm" className="neon-border text-xs sm:text-sm px-2 sm:px-3">
+              <History className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+              <span className="hidden xs:inline">Recipes</span> ({recentRecipes.length})
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl max-h-[80vh]">
+          <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[80vh] mx-2">
             <DialogHeader>
-              <DialogTitle>Recent Recipes from AI Assistant</DialogTitle>
+              <DialogTitle className="text-sm sm:text-base">Recent Recipes from AI Assistant</DialogTitle>
             </DialogHeader>
             <ScrollArea className="mt-4 max-h-[60vh]">
               <RecentRecipes recipes={recentRecipes} />
@@ -47,9 +47,10 @@ const ChatHeader = ({ recentRecipes, conversationLength, onClearHistory }: ChatH
             variant="outline" 
             size="sm" 
             onClick={onClearHistory}
-            className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
+            className="text-destructive hover:bg-destructive hover:text-destructive-foreground px-2 sm:px-3"
           >
-            <Trash2 className="h-4 w-4" />
+            <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />
+            <span className="hidden sm:inline ml-1">Clear</span>
           </Button>
         )}
       </div>
