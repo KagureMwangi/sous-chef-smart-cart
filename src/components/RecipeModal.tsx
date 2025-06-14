@@ -18,7 +18,10 @@ interface RecipeModalProps {
 const RecipeModal = ({ recipe, isOpen, onClose, onToggleFavorite }: RecipeModalProps) => {
   if (!recipe) return null;
   
-  const ingredients = Array.isArray(recipe.ingredients) ? recipe.ingredients : [];
+  // Safely handle the ingredients Json type
+  const ingredients = Array.isArray(recipe.ingredients) 
+    ? recipe.ingredients.filter((ingredient): ingredient is string => typeof ingredient === 'string')
+    : [];
   
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
