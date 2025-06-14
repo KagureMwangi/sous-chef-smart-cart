@@ -115,9 +115,10 @@ const ShoppingAssistant = ({ user }: ShoppingAssistantProps) => {
             </div>
             <Button
               onClick={() => setShowNewListForm(!showNewListForm)}
-              className="gradient-bg text-green-contrast hover:opacity-90"
+              size="sm"
+              className="gradient-bg text-green-contrast hover:opacity-90 text-xs px-3 py-1"
             >
-              <Plus className="h-4 w-4 mr-2" />
+              <Plus className="h-3 w-3 mr-1" />
               New List
             </Button>
           </div>
