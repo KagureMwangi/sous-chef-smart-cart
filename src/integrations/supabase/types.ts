@@ -358,6 +358,60 @@ export type Database = {
         }
         Relationships: []
       }
+      user_recipes: {
+        Row: {
+          cook_time: number | null
+          created_at: string
+          id: string
+          ingredients: Json | null
+          instructions: string | null
+          is_favorite: boolean | null
+          last_searched_at: string | null
+          prep_time: number | null
+          recipe_description: string | null
+          recipe_name: string
+          search_count: number | null
+          servings: number | null
+          source: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cook_time?: number | null
+          created_at?: string
+          id?: string
+          ingredients?: Json | null
+          instructions?: string | null
+          is_favorite?: boolean | null
+          last_searched_at?: string | null
+          prep_time?: number | null
+          recipe_description?: string | null
+          recipe_name: string
+          search_count?: number | null
+          servings?: number | null
+          source?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cook_time?: number | null
+          created_at?: string
+          id?: string
+          ingredients?: Json | null
+          instructions?: string | null
+          is_favorite?: boolean | null
+          last_searched_at?: string | null
+          prep_time?: number | null
+          recipe_description?: string | null
+          recipe_name?: string
+          search_count?: number | null
+          servings?: number | null
+          source?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
