@@ -1,10 +1,10 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { User } from '@supabase/supabase-js';
 import { useRecipes } from '@/hooks/useRecipes';
+import { useIsMobile } from '@/hooks/use-mobile';
 import RecipeModal from './RecipeModal';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { RefreshCw, Heart, Clock, Star, Eye } from 'lucide-react';
@@ -21,6 +21,7 @@ const RecipeManager = ({ user }: RecipeManagerProps) => {
   const [selectedRecipe, setSelectedRecipe] = useState<UserRecipe | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeView, setActiveView] = useState('recent');
+  const isMobile = useIsMobile();
 
   const handleViewRecipe = (recipe: UserRecipe) => {
     setSelectedRecipe(recipe);
@@ -106,7 +107,7 @@ const RecipeManager = ({ user }: RecipeManagerProps) => {
               <AlertDialogTrigger asChild>
                 <Button variant="outline" size="sm">
                   <RefreshCw className="w-4 h-4 mr-2" />
-                  Reset Collection
+                  {!isMobile && "Reset Collection"}
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
@@ -133,15 +134,15 @@ const RecipeManager = ({ user }: RecipeManagerProps) => {
             <ToggleGroup type="single" value={activeView} onValueChange={setActiveView} className="justify-start">
               <ToggleGroupItem value="recent" aria-label="Recent recipes" className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                Recent ({recentRecipes.length})
+                {!isMobile && `Recent (${recentRecipes.length})`}
               </ToggleGroupItem>
               <ToggleGroupItem value="favorites" aria-label="Favorite recipes" className="flex items-center gap-2">
                 <Heart className="w-4 h-4" />
-                Favorites ({favoriteRecipes.length})
+                {!isMobile && `Favorites (${favoriteRecipes.length})`}
               </ToggleGroupItem>
               <ToggleGroupItem value="recommended" aria-label="Popular recipes" className="flex items-center gap-2">
                 <Star className="w-4 h-4" />
-                Popular ({recommendedRecipes.length})
+                {!isMobile && `Popular (${recommendedRecipes.length})`}
               </ToggleGroupItem>
             </ToggleGroup>
 
