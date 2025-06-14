@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Send, Bot, User } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const ApiRequestForm = () => {
   const [userInput, setUserInput] = useState('');
@@ -44,47 +45,38 @@ const ApiRequestForm = () => {
     setUserInput(''); // Clear input immediately
 
     try {
-      console.log('Sending message to zgroq backend:', userMessage);
+      console.log('Sending message to enhanced AI assistant:', userMessage);
       
-      const response = await fetch('https://zgroq.onrender.com/webhook', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user_input: userMessage
-        }),
+      // Use Supabase edge function that includes user context
+      const { data: responseData, error } = await supabase.functions.invoke('ai-assistant', {
+        body: { userInput: userMessage }
       });
 
-      console.log('Response status:', response.status);
-      console.log('Response ok:', response.ok);
+      if (error) {
+        throw error;
+      }
 
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log('Response data:', responseData);
-        
-        // Extract the reply field from the response
-        if (responseData.reply) {
-          setConversation(prev => [...prev, { type: 'bot', message: responseData.reply }]);
-          toast({
-            title: "Success",
-            description: "Message sent successfully!",
-          });
-        } else {
-          console.warn('No reply field found in response:', responseData);
-          setConversation(prev => [...prev, { type: 'bot', message: "No reply received from the backend." }]);
-          toast({
-            title: "Warning",
-            description: "Message sent but no reply field found in response",
-            variant: "destructive",
-          });
-        }
+      console.log('Response data:', responseData);
+      
+      // Extract the reply field from the response
+      if (responseData.reply) {
+        setConversation(prev => [...prev, { type: 'bot', message: responseData.reply }]);
+        toast({
+          title: "Success",
+          description: "Message sent successfully!",
+        });
       } else {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        console.warn('No reply field found in response:', responseData);
+        setConversation(prev => [...prev, { type: 'bot', message: "No reply received from the assistant." }]);
+        toast({
+          title: "Warning",
+          description: "Message sent but no reply field found in response",
+          variant: "destructive",
+        });
       }
     } catch (error) {
       console.error('Error sending message:', error);
-      setConversation(prev => [...prev, { type: 'bot', message: "Error: Failed to get response from backend." }]);
+      setConversation(prev => [...prev, { type: 'bot', message: "Error: Failed to get response from assistant." }]);
       toast({
         title: "Error",
         description: `Failed to send message: ${error instanceof Error ? error.message : 'Unknown error'}`,
@@ -111,7 +103,8 @@ const ApiRequestForm = () => {
               {conversation.length === 0 ? (
                 <div className="text-center text-muted-foreground py-6 sm:py-8">
                   <Bot className="h-10 w-10 sm:h-12 sm:w-12 mx-auto mb-4 opacity-50" />
-                  <p className="text-sm sm:text-base">Ask me anything! I'm here to help answer your questions.</p>
+                  <p className="text-sm sm:text-base">Ask me anything! I can help with cooking, meal planning, and recipes based on what you have in your pantry.</p>
+                  <p className="text-xs sm:text-sm mt-2 opacity-75">I have access to your pantry items and dietary restrictions to give you personalized advice.</p>
                 </div>
               ) : (
                 conversation.map((item, index) => (
@@ -141,7 +134,7 @@ const ApiRequestForm = () => {
                     <Bot className="h-4 w-4 sm:h-5 sm:w-5 text-green-500" />
                   </div>
                   <div className="flex-1 bg-gray-50 dark:bg-gray-800 rounded-lg p-2 sm:p-3">
-                    <p className="text-xs sm:text-sm text-muted-foreground">AI is thinking...</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">AI is thinking and checking your pantry...</p>
                   </div>
                 </div>
               )}
@@ -155,7 +148,7 @@ const ApiRequestForm = () => {
             <Input
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
-              placeholder="Ask me anything..."
+              placeholder="Ask me about cooking, recipes, or what you can make with your pantry..."
               disabled={isLoading}
               className="flex-1 text-sm sm:text-base"
               autoFocus
@@ -170,8 +163,8 @@ const ApiRequestForm = () => {
           </form>
 
           <div className="mt-4 text-xs text-muted-foreground">
-            <p className="break-all">Backend: https://zgroq.onrender.com/webhook</p>
-            <p className="break-all">Method: POST | Format: {JSON.stringify({"user_input": "message"})} | Expects: {JSON.stringify({"reply": "response"})}</p>
+            <p className="break-all">Enhanced AI Assistant with access to your pantry and dietary preferences</p>
+            <p className="break-all">Try asking: "What can I cook with what I have?" or "Suggest a recipe for dinner"</p>
           </div>
         </div>
       </CardContent>
