@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -211,8 +212,8 @@ const RecipeManager = ({ user }: RecipeManagerProps) => {
                             size="sm"
                             onClick={() => handleViewRecipe(recipe)}
                           >
-                            <Eye className="w-4 h-4 mr-1" />
-                            View
+                            <Eye className="w-4 h-4" />
+                            {!isMobile && <span className="ml-1">View</span>}
                           </Button>
                           <Button
                             variant={recipe.is_favorite ? "default" : "outline"}
