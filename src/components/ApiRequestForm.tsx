@@ -4,16 +4,24 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Send, Bot, User } from 'lucide-react';
+import { Send, Bot, User, History, Trash2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { useConversationHistory } from '@/hooks/useConversationHistory';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import RecentRecipes from './RecentRecipes';
 
-const ApiRequestForm = () => {
+interface ApiRequestFormProps {
+  userId?: string;
+}
+
+const ApiRequestForm = ({ userId }: ApiRequestFormProps) => {
   const [userInput, setUserInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [conversation, setConversation] = useState<Array<{type: 'user' | 'bot', message: string}>>([]);
   const { toast } = useToast();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  
+  const { conversation, addMessage, getRecentRecipes, clearHistory } = useConversationHistory(userId);
 
   // Auto-scroll to bottom when new messages are added
   useEffect(() => {
@@ -41,7 +49,7 @@ const ApiRequestForm = () => {
     setIsLoading(true);
     
     // Add user message to conversation
-    setConversation(prev => [...prev, { type: 'user', message: userMessage }]);
+    addMessage({ type: 'user', message: userMessage });
     setUserInput(''); // Clear input immediately
 
     try {
@@ -60,14 +68,14 @@ const ApiRequestForm = () => {
       
       // Extract the reply field from the response
       if (responseData.reply) {
-        setConversation(prev => [...prev, { type: 'bot', message: responseData.reply }]);
+        addMessage({ type: 'bot', message: responseData.reply });
         toast({
           title: "Success",
           description: "Message sent successfully!",
         });
       } else {
         console.warn('No reply field found in response:', responseData);
-        setConversation(prev => [...prev, { type: 'bot', message: "No reply received from the assistant." }]);
+        addMessage({ type: 'bot', message: "No reply received from the assistant." });
         toast({
           title: "Warning",
           description: "Message sent but no reply field found in response",
@@ -76,7 +84,7 @@ const ApiRequestForm = () => {
       }
     } catch (error) {
       console.error('Error sending message:', error);
-      setConversation(prev => [...prev, { type: 'bot', message: "Error: Failed to get response from assistant." }]);
+      addMessage({ type: 'bot', message: "Error: Failed to get response from assistant." });
       toast({
         title: "Error",
         description: `Failed to send message: ${error instanceof Error ? error.message : 'Unknown error'}`,
@@ -87,14 +95,51 @@ const ApiRequestForm = () => {
     }
   };
 
+  const recentRecipes = getRecentRecipes();
+
   return (
     <Card className="glass-effect neon-border hover:neon-glow transition-all duration-300 w-full max-w-5xl sm:max-w-6xl mx-auto h-[600px] flex flex-col px-2 sm:px-4">
       <CardHeader className="flex-shrink-0 px-2 sm:px-6">
-        <CardTitle className="gradient-text flex items-center space-x-2 text-lg sm:text-2xl">
-          <Send className="h-5 w-5 sm:h-6 sm:w-6" />
-          <span>AI Question Assistant</span>
-        </CardTitle>
+        <div className="flex justify-between items-center">
+          <CardTitle className="gradient-text flex items-center space-x-2 text-lg sm:text-2xl">
+            <Send className="h-5 w-5 sm:h-6 sm:w-6" />
+            <span>AI Question Assistant</span>
+          </CardTitle>
+          
+          <div className="flex items-center space-x-2">
+            {/* Recent Recipes Dialog */}
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="sm" className="neon-border">
+                  <History className="h-4 w-4 mr-1" />
+                  Recipes ({recentRecipes.length})
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl max-h-[80vh]">
+                <DialogHeader>
+                  <DialogTitle>Recent Recipes from AI Assistant</DialogTitle>
+                </DialogHeader>
+                <ScrollArea className="mt-4 max-h-[60vh]">
+                  <RecentRecipes recipes={recentRecipes} />
+                </ScrollArea>
+              </DialogContent>
+            </Dialog>
+
+            {/* Clear History Button */}
+            {conversation.length > 0 && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={clearHistory}
+                className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            )}
+          </div>
+        </div>
       </CardHeader>
+      
       <CardContent className="flex-1 flex flex-col min-h-0 px-2 sm:px-6">
         {/* Chat Messages with ScrollArea */}
         <div className="flex-1 min-h-0 mb-4">
@@ -107,8 +152,8 @@ const ApiRequestForm = () => {
                   <p className="text-xs sm:text-sm mt-2 opacity-75">I have access to your pantry items and dietary restrictions to give you personalized advice.</p>
                 </div>
               ) : (
-                conversation.map((item, index) => (
-                  <div key={index} className="flex items-start space-x-2 sm:space-x-3">
+                conversation.map((item) => (
+                  <div key={item.id} className="flex items-start space-x-2 sm:space-x-3">
                     <div className="flex-shrink-0">
                       {item.type === 'user' ? (
                         <User className="h-4 w-4 sm:h-5 sm:w-5 text-blue-500" />
@@ -122,6 +167,14 @@ const ApiRequestForm = () => {
                         : 'bg-gray-50 dark:bg-gray-800'
                     }`}>
                       <p className="text-xs sm:text-sm whitespace-pre-wrap">{item.message}</p>
+                      {item.containsRecipe && (
+                        <div className="mt-2">
+                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-200">
+                            <Send className="h-3 w-3 mr-1" />
+                            Recipe
+                          </span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))
@@ -165,6 +218,11 @@ const ApiRequestForm = () => {
           <div className="mt-4 text-xs text-muted-foreground">
             <p className="break-all">Enhanced AI Assistant with access to your pantry and dietary preferences</p>
             <p className="break-all">Try asking: "What can I cook with what I have?" or "Suggest a recipe for dinner"</p>
+            {recentRecipes.length > 0 && (
+              <p className="break-all text-green-600 dark:text-green-400">
+                💡 {recentRecipes.length} recent recipe{recentRecipes.length > 1 ? 's' : ''} available in history
+              </p>
+            )}
           </div>
         </div>
       </CardContent>

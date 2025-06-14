@@ -235,7 +235,7 @@ const Dashboard = ({ user }: DashboardProps) => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ApiRequestForm />
+                <ApiRequestForm userId={user.id} />
               </CardContent>
             </Card>
           </TabsContent>
